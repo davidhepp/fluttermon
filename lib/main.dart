@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'providers/pokemon_provider.dart';
+import 'screens/pokemon_list_screen.dart';
+import 'services/pokemon_service.dart';
 
 void main() {
   runApp(const MainApp());
@@ -9,11 +14,11 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
+    return ChangeNotifierProvider(
+      create: (_) => PokemonProvider(PokemonService())..fetchPokemons(),
+      child: const MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: PokemonListScreen(),
       ),
     );
   }
