@@ -66,7 +66,6 @@ lib/
 - Imports the `Pokemon` model.
 - Receives `List<Pokemon>` from the screen.
 - Builds the basic list UI.
-- Capitalizes each Pokemon name before displaying it.
 
 ## Data Flow
 
