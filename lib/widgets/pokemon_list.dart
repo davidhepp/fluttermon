@@ -9,21 +9,20 @@ class PokemonList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: pokemons.length,
-      itemBuilder: (context, index) {
-        final String name = pokemons[index].name;
-        final String capitalizedName = name.isNotEmpty
-            ? '${name[0].toUpperCase()}${name.substring(1)}'
-            : name;
+    return Scrollbar(
+      child: ListView.builder(
+        itemCount: pokemons.length,
+        itemBuilder: (context, index) {
+          final String name = pokemons[index].name;
 
-        return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: Center(
-            child: Text(capitalizedName, style: const TextStyle(fontSize: 18)),
-          ),
-        );
-      },
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Center(
+              child: Text(name, style: const TextStyle(fontSize: 18)),
+            ),
+          );
+        },
+      ),
     );
   }
 }
