@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../screens/profile_screen.dart';
+import '../theme/app_colors.dart';
 import '../theme/app_theme.dart';
 
 class CustomSliverAppBar extends StatelessWidget {
@@ -107,13 +108,13 @@ class _AppBarCircleButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: Colors.black.withValues(alpha: 0.35),
+        color: AppColors.headerButtonBackground,
         shape: BoxShape.circle,
-        border: Border.all(color: Colors.white, width: 1.5),
+        border: Border.all(color: AppColors.white, width: 1.5),
       ),
       child: IconButton(
         icon: Icon(icon),
-        color: Colors.white,
+        color: AppColors.white,
         tooltip: tooltip,
         onPressed: onPressed,
       ),

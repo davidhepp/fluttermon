@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'app_colors.dart';
+
 @immutable
 class ImageAppBarColors extends ThemeExtension<ImageAppBarColors> {
   final Color background;
@@ -51,68 +53,68 @@ class ImageAppBarColors extends ThemeExtension<ImageAppBarColors> {
 class AppTheme {
   static final ThemeData light = ThemeData(
     colorScheme: ColorScheme.fromSeed(
-      seedColor: const Color(0xFFFFCB05),
+      seedColor: AppColors.yellow,
       brightness: Brightness.light,
-      primary: const Color(0xFFFFCB05),
-      onPrimary: const Color(0xFF0B1F3A),
-      secondary: const Color(0xFF0B1F3A),
-      onSecondary: Colors.white,
-      surface: Colors.white,
-      onSurface: const Color(0xFF0B1F3A),
+      primary: AppColors.yellow,
+      onPrimary: AppColors.navy,
+      secondary: AppColors.navy,
+      onSecondary: AppColors.white,
+      surface: AppColors.lightSurface,
+      onSurface: AppColors.lightText,
     ),
-    scaffoldBackgroundColor: Colors.white,
+    scaffoldBackgroundColor: AppColors.lightBackground,
     appBarTheme: const AppBarTheme(
-      backgroundColor: Colors.white,
-      foregroundColor: Color(0xFF0B1F3A),
+      backgroundColor: AppColors.lightBackground,
+      foregroundColor: AppColors.lightText,
       centerTitle: true,
     ),
     navigationBarTheme: NavigationBarThemeData(
-      backgroundColor: Colors.white,
-      indicatorColor: const Color(0xFFFFCB05),
+      backgroundColor: AppColors.lightBackground,
+      indicatorColor: AppColors.yellow,
       labelTextStyle: WidgetStateProperty.all(
         const TextStyle(fontWeight: FontWeight.w600),
       ),
     ),
     extensions: const [
       ImageAppBarColors(
-        background: Colors.transparent,
-        surfaceTint: Colors.transparent,
-        imageOverlay: Color(0x33000000),
-        title: Colors.white,
+        background: AppColors.transparent,
+        surfaceTint: AppColors.transparent,
+        imageOverlay: AppColors.lightHeaderOverlay,
+        title: AppColors.white,
       ),
     ],
   );
 
   static final ThemeData dark = ThemeData(
     colorScheme: ColorScheme.fromSeed(
-      seedColor: const Color(0xFF0D47A1),
+      seedColor: AppColors.darkBlue,
       brightness: Brightness.dark,
-      primary: const Color(0xFF0D47A1),
-      onPrimary: Colors.white,
-      secondary: Colors.white,
-      onSecondary: const Color(0xFF06111F),
-      surface: const Color(0xFF050505),
-      onSurface: Colors.white,
+      primary: AppColors.darkBlue,
+      onPrimary: AppColors.white,
+      secondary: AppColors.white,
+      onSecondary: AppColors.darkBackground,
+      surface: AppColors.darkSurface,
+      onSurface: AppColors.darkText,
     ),
-    scaffoldBackgroundColor: Colors.black,
+    scaffoldBackgroundColor: AppColors.darkBackground,
     appBarTheme: const AppBarTheme(
-      backgroundColor: Colors.black,
-      foregroundColor: Colors.white,
+      backgroundColor: AppColors.darkBackground,
+      foregroundColor: AppColors.darkText,
       centerTitle: true,
     ),
     navigationBarTheme: NavigationBarThemeData(
-      backgroundColor: Colors.black,
-      indicatorColor: const Color(0xFF0D47A1),
+      backgroundColor: AppColors.darkBackground,
+      indicatorColor: AppColors.darkBlue,
       labelTextStyle: WidgetStateProperty.all(
         const TextStyle(fontWeight: FontWeight.w600),
       ),
     ),
     extensions: const [
       ImageAppBarColors(
-        background: Colors.transparent,
-        surfaceTint: Colors.transparent,
-        imageOverlay: Color(0x73000000),
-        title: Colors.white,
+        background: AppColors.transparent,
+        surfaceTint: AppColors.transparent,
+        imageOverlay: AppColors.darkHeaderOverlay,
+        title: AppColors.white,
       ),
     ],
   );
