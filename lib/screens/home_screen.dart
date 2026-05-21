@@ -22,15 +22,6 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
-  void _selectPage(int page) {
-    context.read<NavigationProvider>().setCurrentPage(page);
-    _pageController.animateToPage(
-      page,
-      duration: const Duration(milliseconds: 250),
-      curve: Curves.easeOut,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final currentPage = context.watch<NavigationProvider>().currentPage;
@@ -46,24 +37,8 @@ class _HomeScreenState extends State<HomeScreen> {
           Positioned(
             left: 0,
             right: 0,
-            bottom: 88 + MediaQuery.paddingOf(context).bottom,
+            bottom: 16 + MediaQuery.paddingOf(context).bottom,
             child: PageIndicator(currentPage: currentPage, pageCount: 2),
-          ),
-        ],
-      ),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: currentPage,
-        onDestinationSelected: _selectPage,
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.catching_pokemon_outlined),
-            selectedIcon: Icon(Icons.catching_pokemon),
-            label: 'Main',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.collections_bookmark_outlined),
-            selectedIcon: Icon(Icons.collections_bookmark),
-            label: 'Collection',
           ),
         ],
       ),
