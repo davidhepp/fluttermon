@@ -51,8 +51,27 @@ class ImageAppBarColors extends ThemeExtension<ImageAppBarColors> {
 class AppTheme {
   static final ThemeData light = ThemeData(
     colorScheme: ColorScheme.fromSeed(
-      seedColor: const Color(0xFFE3350D),
+      seedColor: const Color(0xFFFFCB05),
       brightness: Brightness.light,
+      primary: const Color(0xFFFFCB05),
+      onPrimary: const Color(0xFF0B1F3A),
+      secondary: const Color(0xFF0B1F3A),
+      onSecondary: Colors.white,
+      surface: Colors.white,
+      onSurface: const Color(0xFF0B1F3A),
+    ),
+    scaffoldBackgroundColor: Colors.white,
+    appBarTheme: const AppBarTheme(
+      backgroundColor: Colors.white,
+      foregroundColor: Color(0xFF0B1F3A),
+      centerTitle: true,
+    ),
+    navigationBarTheme: NavigationBarThemeData(
+      backgroundColor: Colors.white,
+      indicatorColor: const Color(0xFFFFCB05),
+      labelTextStyle: WidgetStateProperty.all(
+        const TextStyle(fontWeight: FontWeight.w600),
+      ),
     ),
     extensions: const [
       ImageAppBarColors(
@@ -66,8 +85,27 @@ class AppTheme {
 
   static final ThemeData dark = ThemeData(
     colorScheme: ColorScheme.fromSeed(
-      seedColor: const Color(0xFFE3350D),
+      seedColor: const Color(0xFF0D47A1),
       brightness: Brightness.dark,
+      primary: const Color(0xFF0D47A1),
+      onPrimary: Colors.white,
+      secondary: Colors.white,
+      onSecondary: const Color(0xFF06111F),
+      surface: const Color(0xFF050505),
+      onSurface: Colors.white,
+    ),
+    scaffoldBackgroundColor: Colors.black,
+    appBarTheme: const AppBarTheme(
+      backgroundColor: Colors.black,
+      foregroundColor: Colors.white,
+      centerTitle: true,
+    ),
+    navigationBarTheme: NavigationBarThemeData(
+      backgroundColor: Colors.black,
+      indicatorColor: const Color(0xFF0D47A1),
+      labelTextStyle: WidgetStateProperty.all(
+        const TextStyle(fontWeight: FontWeight.w600),
+      ),
     ),
     extensions: const [
       ImageAppBarColors(

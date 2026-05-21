@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../screens/profile_screen.dart';
+import '../screens/settings_screen.dart';
 import '../theme/app_theme.dart';
 
 class CustomSliverAppBar extends StatelessWidget {
@@ -25,18 +26,35 @@ class CustomSliverAppBar extends StatelessWidget {
     return SliverAppBar(
       automaticallyImplyLeading: false,
       leading: showProfileButton
-          ? IconButton(
-              icon: const Icon(Icons.person),
-              tooltip: 'Profile',
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute<void>(
-                    builder: (_) => const ProfileScreen(),
-                  ),
-                );
-              },
+          ? Padding(
+              padding: const EdgeInsets.only(left: 8),
+              child: _AppBarCircleButton(
+                icon: Icons.person,
+                tooltip: 'Profile',
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (_) => const ProfileScreen(),
+                    ),
+                  );
+                },
+              ),
             )
           : null,
+      actions: [
+        Padding(
+          padding: const EdgeInsets.only(right: 8),
+          child: _AppBarCircleButton(
+            icon: Icons.settings,
+            tooltip: 'Settings',
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute<void>(builder: (_) => const SettingsScreen()),
+              );
+            },
+          ),
+        ),
+      ],
       pinned: true,
       expandedHeight: expandedHeight,
       elevation: 0,
@@ -84,6 +102,35 @@ class CustomSliverAppBar extends StatelessWidget {
             ],
           );
         },
+      ),
+    );
+  }
+}
+
+class _AppBarCircleButton extends StatelessWidget {
+  const _AppBarCircleButton({
+    required this.icon,
+    required this.tooltip,
+    required this.onPressed,
+  });
+
+  final IconData icon;
+  final String tooltip;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: Colors.black.withValues(alpha: 0.35),
+        shape: BoxShape.circle,
+        border: Border.all(color: Colors.white, width: 1.5),
+      ),
+      child: IconButton(
+        icon: Icon(icon),
+        color: Colors.white,
+        tooltip: tooltip,
+        onPressed: onPressed,
       ),
     );
   }
