@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../screens/profile_screen.dart';
 import '../theme/app_theme.dart';
 
 class CustomSliverAppBar extends StatelessWidget {
   final String title;
   final String imagePath;
+  final bool showProfileButton;
 
   static const double expandedHeight = 180;
 
@@ -12,6 +14,7 @@ class CustomSliverAppBar extends StatelessWidget {
     super.key,
     required this.title,
     required this.imagePath,
+    this.showProfileButton = false,
   });
 
   @override
@@ -21,6 +24,19 @@ class CustomSliverAppBar extends StatelessWidget {
 
     return SliverAppBar(
       automaticallyImplyLeading: false,
+      leading: showProfileButton
+          ? IconButton(
+              icon: const Icon(Icons.person),
+              tooltip: 'Profile',
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute<void>(
+                    builder: (_) => const ProfileScreen(),
+                  ),
+                );
+              },
+            )
+          : null,
       pinned: true,
       expandedHeight: expandedHeight,
       elevation: 0,
