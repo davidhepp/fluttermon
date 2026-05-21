@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../screens/profile_screen.dart';
-import '../screens/settings_screen.dart';
 import '../theme/app_theme.dart';
 
 class CustomSliverAppBar extends StatelessWidget {
@@ -41,20 +40,6 @@ class CustomSliverAppBar extends StatelessWidget {
               ),
             )
           : null,
-      actions: [
-        Padding(
-          padding: const EdgeInsets.only(right: 8),
-          child: _AppBarCircleButton(
-            icon: Icons.settings,
-            tooltip: 'Settings',
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute<void>(builder: (_) => const SettingsScreen()),
-              );
-            },
-          ),
-        ),
-      ],
       pinned: true,
       expandedHeight: expandedHeight,
       elevation: 0,
