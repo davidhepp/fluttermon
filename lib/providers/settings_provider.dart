@@ -8,10 +8,7 @@ class SettingsProvider extends ChangeNotifier {
 
   final SettingsService _settingsService;
 
-  AppSettings settings = const AppSettings(
-    themeMode: ThemeMode.system,
-    languageCode: 'en',
-  );
+  AppSettings settings = const AppSettings(themeMode: ThemeMode.system);
   bool isLoading = true;
   bool isSaving = false;
   String? errorMessage;
@@ -37,10 +34,6 @@ class SettingsProvider extends ChangeNotifier {
 
   Future<void> updateThemeMode(ThemeMode themeMode) async {
     await _save(() => _settingsService.saveThemeMode(themeMode));
-  }
-
-  Future<void> updateLanguageCode(String languageCode) async {
-    await _save(() => _settingsService.saveLanguageCode(languageCode));
   }
 
   Future<void> _save(Future<AppSettings> Function() saveSettings) async {

@@ -6,11 +6,6 @@ import '../providers/settings_provider.dart';
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
-  static const Map<String, String> _languages = {
-    'en': 'English',
-    'de': 'Deutsch',
-  };
-
   @override
   Widget build(BuildContext context) {
     final settingsProvider = context.watch<SettingsProvider>();
@@ -71,31 +66,6 @@ class SettingsScreen extends StatelessWidget {
                     ? null
                     : (selection) {
                         settingsProvider.updateThemeMode(selection.first);
-                      },
-              ),
-              const SizedBox(height: 24),
-              Text('Language', style: Theme.of(context).textTheme.titleMedium),
-              const SizedBox(height: 8),
-              DropdownButtonFormField<String>(
-                initialValue: settingsProvider.settings.languageCode,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Language',
-                ),
-                items: _languages.entries
-                    .map(
-                      (language) => DropdownMenuItem(
-                        value: language.key,
-                        child: Text(language.value),
-                      ),
-                    )
-                    .toList(),
-                onChanged: settingsProvider.isSaving
-                    ? null
-                    : (languageCode) {
-                        if (languageCode != null) {
-                          settingsProvider.updateLanguageCode(languageCode);
-                        }
                       },
               ),
             ],

@@ -1,27 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/app_settings.dart';
 
 class SettingsService {
-  AppSettings _settings = const AppSettings(
-    themeMode: ThemeMode.system,
-    languageCode: 'en',
-  );
+  static const String _themeModeKey = 'theme_mode';
 
   Future<AppSettings> loadSettings() async {
-    return _settings;
+    final preferences = await SharedPreferences.getInstance();
+    final savedThemeMode = preferences.getString(_themeModeKey);
+
+    return AppSettings(themeMode: _themeModeFromString(savedThemeMode));
   }
 
   Future<AppSettings> saveThemeMode(ThemeMode themeMode) async {
-    _settings = _settings.copyWith(themeMode: themeMode);
+    final preferences = await SharedPreferences.getInstance();
+    final didSave = await preferences.setString(_themeModeKey, themeMode.name);
 
-    return _settings;
+    if (!didSave) {
+      throw const SettingsServiceException('Failed to save theme mode');
+    }
+
+    return loadSettings();
   }
 
-  Future<AppSettings> saveLanguageCode(String languageCode) async {
-    _settings = _settings.copyWith(languageCode: languageCode);
-
-    return _settings;
+  ThemeMode _themeModeFromString(String? themeMode) {
+    return ThemeMode.values.firstWhere(
+      (mode) => mode.name == themeMode,
+      orElse: () => ThemeMode.system,
+    );
   }
 }
 
