@@ -4,9 +4,11 @@ import 'package:provider/provider.dart';
 import 'providers/navigation_provider.dart';
 import 'providers/pokemon_provider.dart';
 import 'providers/profile_provider.dart';
+import 'providers/settings_provider.dart';
 import 'screens/home_screen.dart';
 import 'services/pokemon_service.dart';
 import 'services/profile_service.dart';
+import 'services/settings_service.dart';
 import 'theme/app_theme.dart';
 
 void main() {
@@ -27,13 +29,20 @@ class MainApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => ProfileProvider(ProfileService())..fetchProfile(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => SettingsProvider(SettingsService())..loadSettings(),
+        ),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: AppTheme.light,
-        darkTheme: AppTheme.dark,
-        themeMode: ThemeMode.system,
-        home: const HomeScreen(),
+      child: Consumer<SettingsProvider>(
+        builder: (context, settingsProvider, child) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: AppTheme.light,
+            darkTheme: AppTheme.dark,
+            themeMode: settingsProvider.themeMode,
+            home: const HomeScreen(),
+          );
+        },
       ),
     );
   }
