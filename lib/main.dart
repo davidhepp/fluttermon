@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'app_routes.dart';
 import 'providers/navigation_provider.dart';
 import 'providers/pokemon_provider.dart';
 import 'providers/profile_provider.dart';
 import 'providers/settings_provider.dart';
+import 'screens/collection_screen.dart';
 import 'screens/home_screen.dart';
+import 'screens/profile_screen.dart';
+import 'screens/settings_screen.dart';
 import 'services/pokemon_service.dart';
 import 'services/profile_service.dart';
 import 'services/settings_service.dart';
@@ -40,7 +44,13 @@ class MainApp extends StatelessWidget {
             theme: AppTheme.light,
             darkTheme: AppTheme.dark,
             themeMode: settingsProvider.themeMode,
-            home: const HomeScreen(),
+            initialRoute: AppRoutes.home,
+            routes: {
+              AppRoutes.home: (_) => const HomeScreen(),
+              AppRoutes.collection: (_) => const CollectionScreen(),
+              AppRoutes.profile: (_) => const ProfileScreen(),
+              AppRoutes.settings: (_) => const SettingsScreen(),
+            },
           );
         },
       ),
