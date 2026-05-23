@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../screens/profile_screen.dart';
+import '../app_routes.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_theme.dart';
 
@@ -32,11 +32,7 @@ class CustomSliverAppBar extends StatelessWidget {
                 icon: Icons.person,
                 tooltip: 'Profile',
                 onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute<void>(
-                      builder: (_) => const ProfileScreen(),
-                    ),
-                  );
+                  Navigator.of(context).pushNamed(AppRoutes.profile);
                 },
               ),
             )

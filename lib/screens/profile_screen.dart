@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../app_routes.dart';
 import '../providers/profile_provider.dart';
-import 'settings_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -19,9 +19,7 @@ class ProfileScreen extends StatelessWidget {
             icon: const Icon(Icons.settings),
             tooltip: 'Settings',
             onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute<void>(builder: (_) => const SettingsScreen()),
-              );
+              Navigator.of(context).pushNamed(AppRoutes.settings);
             },
           ),
         ],
