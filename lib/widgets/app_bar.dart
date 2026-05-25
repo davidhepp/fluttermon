@@ -9,7 +9,7 @@ class CustomSliverAppBar extends StatelessWidget {
   final String imagePath;
   final bool showProfileButton;
 
-  static const double expandedHeight = 180;
+  static const double expandedHeight = 200;
 
   const CustomSliverAppBar({
     super.key,
@@ -45,22 +45,32 @@ class CustomSliverAppBar extends StatelessWidget {
       surfaceTintColor: appBarColors.surfaceTint,
       flexibleSpace: LayoutBuilder(
         builder: (context, constraints) {
+          // the app bar can only shrink down to the toolbar plus the safe area
           final minHeight = kToolbarHeight + topPadding;
           final availableHeight = expandedHeight + topPadding - minHeight;
+
+          // 0 means fully collapsed, 1 means fully expanded
           final expandedProgress =
               ((constraints.maxHeight - minHeight) / availableHeight).clamp(
                 0.0,
                 1.0,
               );
+
+          // easing the progress to make the title movement feel smoother
+          final easedProgress = Curves.easeInOutCubic.transform(
+            expandedProgress,
+          );
+
+          // moving and resizing the title between the collapsed and expanded states
           final alignment = Alignment.lerp(
             Alignment.topCenter,
             Alignment.center,
-            expandedProgress,
+            easedProgress,
           )!;
           final textStyle = TextStyle.lerp(
             Theme.of(context).textTheme.titleLarge,
             Theme.of(context).textTheme.headlineMedium,
-            expandedProgress,
+            easedProgress,
           );
 
           return Stack(

@@ -57,7 +57,7 @@ class _PokemonListScreenState extends State<PokemonListScreen> {
           slivers: [
             const CustomSliverAppBar(
               title: 'Pokémon',
-              imagePath: 'assets/images/appbar/appbar1.png',
+              imagePath: 'assets/images/appbar/appbar2.png',
               showProfileButton: true,
             ),
             if (pokemonProvider.isLoading)

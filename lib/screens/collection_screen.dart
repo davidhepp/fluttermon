@@ -12,7 +12,7 @@ class CollectionScreen extends StatelessWidget {
         slivers: [
           CustomSliverAppBar(
             title: 'Collection',
-            imagePath: 'assets/images/appbar/appbar1.png',
+            imagePath: 'assets/images/appbar/appbar3.png',
             showProfileButton: true,
           ),
           SliverFillRemaining(
