@@ -25,18 +25,19 @@ class CustomSliverAppBar extends StatelessWidget {
 
     return SliverAppBar(
       automaticallyImplyLeading: false,
-      leading: showProfileButton
-          ? Padding(
-              padding: const EdgeInsets.only(left: 8),
-              child: _AppBarCircleButton(
-                icon: Icons.person,
-                tooltip: 'Profile',
-                onPressed: () {
-                  Navigator.of(context).pushNamed(AppRoutes.profile);
-                },
-              ),
-            )
-          : null,
+      actions: [
+        if (showProfileButton)
+          Padding(
+            padding: const EdgeInsets.only(right: 8),
+            child: _AppBarCircleButton(
+              icon: Icons.person,
+              tooltip: 'Profile',
+              onPressed: () {
+                Navigator.of(context).pushNamed(AppRoutes.profile);
+              },
+            ),
+          ),
+      ],
       pinned: true,
       expandedHeight: expandedHeight,
       elevation: 0,
