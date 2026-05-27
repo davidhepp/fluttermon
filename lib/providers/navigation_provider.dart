@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 class NavigationProvider extends ChangeNotifier {
-  int _currentPage = 0;
+  int _currentPage = 1;
 
   int get currentPage => _currentPage;
 

@@ -25,7 +25,6 @@ class CollectionScreen extends StatelessWidget {
           const CustomSliverAppBar(
             title: 'Collection',
             imagePath: 'assets/images/appbar/appbar3.png',
-            showProfileButton: true,
           ),
           if (collectionProvider.isLoading)
             const SliverFillRemaining(

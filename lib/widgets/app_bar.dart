@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../app_routes.dart';
-import '../theme/app_colors.dart';
 import '../theme/app_theme.dart';
 
 class CustomSliverAppBar extends StatelessWidget {
   final String title;
   final String imagePath;
-  final bool showProfileButton;
 
   static const double expandedHeight = 200;
 
@@ -15,7 +12,6 @@ class CustomSliverAppBar extends StatelessWidget {
     super.key,
     required this.title,
     required this.imagePath,
-    this.showProfileButton = false,
   });
 
   @override
@@ -25,19 +21,6 @@ class CustomSliverAppBar extends StatelessWidget {
 
     return SliverAppBar(
       automaticallyImplyLeading: false,
-      actions: [
-        if (showProfileButton)
-          Padding(
-            padding: const EdgeInsets.only(right: 8),
-            child: _AppBarCircleButton(
-              icon: Icons.person,
-              tooltip: 'Profile',
-              onPressed: () {
-                Navigator.of(context).pushNamed(AppRoutes.profile);
-              },
-            ),
-          ),
-      ],
       pinned: true,
       expandedHeight: expandedHeight,
       elevation: 0,
@@ -96,29 +79,6 @@ class CustomSliverAppBar extends StatelessWidget {
           );
         },
       ),
-    );
-  }
-}
-
-class _AppBarCircleButton extends StatelessWidget {
-  const _AppBarCircleButton({
-    required this.icon,
-    required this.tooltip,
-    required this.onPressed,
-  });
-
-  final IconData icon;
-  final String tooltip;
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      icon: Icon(icon),
-      color: AppColors.white,
-      iconSize: 32,
-      tooltip: tooltip,
-      onPressed: onPressed,
     );
   }
 }
