@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'app_routes.dart';
 import 'providers/navigation_provider.dart';
+import 'providers/pokemon_detail_provider.dart';
 import 'providers/pokemon_provider.dart';
 import 'providers/profile_provider.dart';
 import 'providers/settings_provider.dart';
@@ -49,7 +50,10 @@ class MainApp extends StatelessWidget {
             routes: {
               AppRoutes.home: (_) => const HomeScreen(),
               AppRoutes.collection: (_) => const CollectionScreen(),
-              AppRoutes.pokemonDetail: (_) => const PokemonDetailScreen(),
+              AppRoutes.pokemonDetail: (_) => ChangeNotifierProvider(
+                create: (_) => PokemonDetailProvider(PokemonService()),
+                child: const PokemonDetailScreen(),
+              ),
               AppRoutes.profile: (_) => const ProfileScreen(),
               AppRoutes.settings: (_) => const SettingsScreen(),
             },

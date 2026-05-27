@@ -4,6 +4,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:http/http.dart' as http;
 
 import '../models/pokemon.dart';
+import '../models/pokemon_detail.dart';
 import '../models/pokemon_page.dart';
 
 class PokemonService {
@@ -50,6 +51,37 @@ class PokemonService {
     final data = json.decode(response.body) as Map<String, dynamic>;
 
     return Pokemon.fromDetailJson(data);
+  }
+
+  Future<PokemonDetail> fetchPokemonDetail(Pokemon pokemon) async {
+    final pokemonResponse = await http.get(
+      Uri.parse('$_baseUrl/${pokemon.id ?? pokemon.name}'),
+    );
+
+    if (pokemonResponse.statusCode == 404) {
+      throw const PokemonNotFoundException('Pokemon not found');
+    }
+
+    if (pokemonResponse.statusCode != 200) {
+      throw const PokemonServiceException('Failed to load pokemon details');
+    }
+
+    final pokemonJson =
+        json.decode(pokemonResponse.body) as Map<String, dynamic>;
+    final speciesUrl = pokemonJson['species']['url'].toString();
+    final speciesResponse = await http.get(Uri.parse(speciesUrl));
+
+    if (speciesResponse.statusCode != 200) {
+      throw const PokemonServiceException('Failed to load Pokedex description');
+    }
+
+    final speciesJson =
+        json.decode(speciesResponse.body) as Map<String, dynamic>;
+
+    return PokemonDetail.fromApiJson(
+      pokemonJson: pokemonJson,
+      speciesJson: speciesJson,
+    );
   }
 }
 
