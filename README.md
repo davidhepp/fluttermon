@@ -28,7 +28,7 @@ The project uses the Pokémon domain because it gives a clear mobile app use cas
 
 ## Setup
 
-This project expects a recent Flutter SDK with Dart 3.11 support. The project was developed with the SDK constraint in `pubspec.yaml`:
+This project was tested with Flutter `3.41.8` on the stable channel and Dart `3.11.5`. The SDK constraint in `pubspec.yaml` is:
 
 ```yaml
 environment:
