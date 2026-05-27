@@ -18,21 +18,12 @@ The project uses the Pokémon domain because it gives a clear mobile app use cas
 
 ## Screenshots
 
-### Pokédex
-
-<img src="docs/screenshots/pokedex.png" alt="Pokédex screen" width="260">
-
-### Collection
-
-<img src="docs/screenshots/collection.png" alt="Collection screen" width="260">
-
-### Profile
-
-<img src="docs/screenshots/profile.png" alt="Profile screen" width="260">
-
-### Settings
-
-<img src="docs/screenshots/settings.png" alt="Settings screen" width="260">
+| Light mode | Dark mode |
+| --- | --- |
+| <img src="docs/screenshots/pokedex.png" alt="Pokédex light mode" width="180"> | <img src="docs/screenshots/pokedex_dark.png" alt="Pokédex dark mode" width="180"> |
+| <img src="docs/screenshots/collection.png" alt="Collection light mode" width="180"> | <img src="docs/screenshots/collection_dark.png" alt="Collection dark mode" width="180"> |
+| <img src="docs/screenshots/profile.png" alt="Profile light mode" width="180"> | <img src="docs/screenshots/profile_dark.png" alt="Profile dark mode" width="180"> |
+| <img src="docs/screenshots/settings.png" alt="Settings light mode" width="180"> | <img src="docs/screenshots/settings_dark.png" alt="Settings dark mode" width="180"> |
 
 ## Setup
 
