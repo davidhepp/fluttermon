@@ -155,9 +155,9 @@ class _PokemonDetailContent extends StatelessWidget {
           alignment: WrapAlignment.center,
           spacing: 8,
           runSpacing: 8,
-          children: detail.types.map((type) {
-            return Chip(label: Text(_formatName(type)));
-          }).toList(),
+          children: detail.types
+              .map((type) => _PokemonTypeBadge(type: type))
+              .toList(),
         ),
         const SizedBox(height: 24),
         Text('Pokédex', style: theme.textTheme.titleLarge),
@@ -168,6 +168,30 @@ class _PokemonDetailContent extends StatelessWidget {
         const SizedBox(height: 12),
         ...detail.stats.map((stat) => _StatRow(stat: stat)),
       ],
+    );
+  }
+}
+
+class _PokemonTypeBadge extends StatelessWidget {
+  const _PokemonTypeBadge({required this.type});
+
+  final String type;
+
+  @override
+  Widget build(BuildContext context) {
+    final assetPath = 'assets/images/types/$type.png';
+
+    return Semantics(
+      label: '${_formatName(type)} type',
+      image: true,
+      child: Image.asset(
+        assetPath,
+        height: 28,
+        fit: BoxFit.contain,
+        errorBuilder: (context, error, stackTrace) {
+          return Chip(label: Text(_formatName(type)));
+        },
+      ),
     );
   }
 }
