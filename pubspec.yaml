@@ -25,3 +25,5 @@ flutter:
   assets:
     - assets/images/
     - assets/images/appbar/
+    - assets/images/types/
+    - assets/data/

@@ -3,6 +3,7 @@ class AppRoutes {
 
   static const home = '/';
   static const collection = '/collection';
+  static const pokemonDetail = '/pokemon-detail';
   static const profile = '/profile';
   static const settings = '/settings';
 }

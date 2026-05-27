@@ -10,7 +10,9 @@ class ProfileProvider extends ChangeNotifier {
 
   UserProfile? profile;
   bool isLoading = true;
+  bool isSaving = false;
   String? errorMessage;
+  String? saveErrorMessage;
 
   Future<void> fetchProfile() async {
     isLoading = true;
@@ -23,6 +25,21 @@ class ProfileProvider extends ChangeNotifier {
       errorMessage = 'Error: $e';
     } finally {
       isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> updateName(String name) async {
+    isSaving = true;
+    saveErrorMessage = null;
+    notifyListeners();
+
+    try {
+      profile = await _profileService.saveName(name);
+    } catch (e) {
+      saveErrorMessage = 'Error: $e';
+    } finally {
+      isSaving = false;
       notifyListeners();
     }
   }
