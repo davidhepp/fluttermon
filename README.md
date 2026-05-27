@@ -20,19 +20,19 @@ The project uses the Pokémon domain because it gives a clear mobile app use cas
 
 ### Pokédex
 
-![Pokédex screen](docs/screenshots/pokedex.png)
+<img src="docs/screenshots/pokedex.png" alt="Pokédex screen" width="260">
 
 ### Collection
 
-![Collection screen](docs/screenshots/collection.png)
+<img src="docs/screenshots/collection.png" alt="Collection screen" width="260">
 
 ### Profile
 
-![Profile screen](docs/screenshots/profile.png)
+<img src="docs/screenshots/profile.png" alt="Profile screen" width="260">
 
 ### Settings
 
-![Settings screen](docs/screenshots/settings.png)
+<img src="docs/screenshots/settings.png" alt="Settings screen" width="260">
 
 ## Setup
 
@@ -88,7 +88,8 @@ flutter analyze
 The app uses a mix of local and remote data:
 
 - `assets/data/pokemon_db.json`: Local Pokémon index generated from the PokeAPI list endpoint. This keeps search fast and avoids loading the full list from the network every time.
-- PokeAPI detail endpoints: Used when opening a Pokémon detail page for types, stats, artwork, and Pokédex description.
+- [PokeAPI Pokémon endpoint](https://pokeapi.co/docs/v2#pokemon): Used when opening a Pokémon detail page for types, stats, artwork, and species URL.
+- [PokeAPI Pokémon Species endpoint](https://pokeapi.co/docs/v2#pokemon-species): Used for the Pokédex description and genus text.
 - `assets/images/types/`: Local type badge sprites downloaded from PokeAPI sprite resources.
 
 ## Architecture
