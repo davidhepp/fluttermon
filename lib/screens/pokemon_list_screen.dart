@@ -30,7 +30,25 @@ class _PokemonListScreenState extends State<PokemonListScreen> {
   }
 
   void _handleScroll() {
+    final pokemonProvider = context.read<PokemonProvider>();
+    if (_shouldLoadNextPage()) {
+      pokemonProvider.loadNextPage();
+    }
+
     setState(() {});
+  }
+
+  bool _shouldLoadNextPage() {
+    if (!_scrollController.hasClients) {
+      return false;
+    }
+
+    const nextPageScrollThreshold = 480.0;
+    final position = _scrollController.position;
+
+    // Start the next API request before the user reaches the end so the next
+    // page is usually ready by the time the bottom cards come into view.
+    return position.extentAfter < nextPageScrollThreshold;
   }
 
   double _scrollbarTopPadding(BuildContext context) {
@@ -72,7 +90,9 @@ class _PokemonListScreenState extends State<PokemonListScreen> {
                     children: [
                       Text(pokemonProvider.errorMessage!),
                       TextButton(
-                        onPressed: pokemonProvider.fetchPokemons,
+                        onPressed: () {
+                          pokemonProvider.fetchPokemons(refresh: true);
+                        },
                         child: const Text('Retry'),
                       ),
                     ],
@@ -84,7 +104,13 @@ class _PokemonListScreenState extends State<PokemonListScreen> {
                 child: Center(child: Text('No pokemons found')),
               )
             else
-              PokemonList(pokemons: pokemonProvider.pokemons),
+              PokemonList(
+                pokemons: pokemonProvider.pokemons,
+                isLoadingMore: pokemonProvider.isLoadingMore,
+                loadMoreErrorMessage: pokemonProvider.loadMoreErrorMessage,
+                hasMorePokemons: pokemonProvider.hasMorePokemons,
+                onRetryLoadMore: pokemonProvider.loadNextPage,
+              ),
           ],
         ),
       ),
