@@ -24,15 +24,15 @@ class ProfileScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Center(
-        child: Builder(
-          builder: (context) {
-            if (profileProvider.isLoading) {
-              return const CircularProgressIndicator();
-            }
+      body: Builder(
+        builder: (context) {
+          if (profileProvider.isLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
 
-            if (profileProvider.errorMessage != null) {
-              return Column(
+          if (profileProvider.errorMessage != null) {
+            return Center(
+              child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(profileProvider.errorMessage!),
@@ -41,38 +41,84 @@ class ProfileScreen extends StatelessWidget {
                     child: const Text('Retry'),
                   ),
                 ],
-              );
-            }
-
-            final profile = profileProvider.profile;
-            if (profile == null) {
-              return const Text('No profile found');
-            }
-
-            return Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                CircleAvatar(
-                  radius: 40,
-                  backgroundColor: Theme.of(context).colorScheme.primary,
-                  child: Icon(
-                    Icons.person,
-                    size: 48,
-                    color: Theme.of(context).colorScheme.onPrimary,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  profile.name,
-                  style: Theme.of(context).textTheme.headlineSmall,
-                ),
-                const SizedBox(height: 8),
-                Text(profile.subtitle),
-              ],
+              ),
             );
-          },
-        ),
+          }
+
+          final profile = profileProvider.profile;
+          if (profile == null) {
+            return const Center(child: Text('No profile found'));
+          }
+
+          return ListView(
+            padding: const EdgeInsets.fromLTRB(24, 32, 24, 24),
+            children: [
+              CircleAvatar(
+                radius: 44,
+                backgroundColor: Theme.of(context).colorScheme.primary,
+                child: Icon(
+                  Icons.person,
+                  size: 52,
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
+              ),
+              const SizedBox(height: 16),
+              Text(
+                profile.name,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.headlineSmall,
+                overflow: TextOverflow.ellipsis,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                profile.subtitle,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              const SizedBox(height: 40),
+              Text('Team', style: Theme.of(context).textTheme.titleLarge),
+              const SizedBox(height: 12),
+              const _TeamSlotGrid(),
+            ],
+          );
+        },
       ),
+    );
+  }
+}
+
+class _TeamSlotGrid extends StatelessWidget {
+  const _TeamSlotGrid();
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: 6,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 12,
+        mainAxisSpacing: 12,
+        childAspectRatio: 1.5,
+      ),
+      itemBuilder: (context, index) {
+        return DecoratedBox(
+          decoration: BoxDecoration(
+            border: Border.all(color: colorScheme.outlineVariant),
+            borderRadius: BorderRadius.circular(8),
+            color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.35),
+          ),
+          child: Center(
+            child: Icon(
+              Icons.add,
+              color: colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
+            ),
+          ),
+        );
+      },
     );
   }
 }
