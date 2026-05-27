@@ -20,11 +20,11 @@ The project uses the Pokémon domain because it gives a clear mobile app use cas
 
 | Light mode | Dark mode |
 | --- | --- |
-| <img src="docs/screenshots/pokedex_light.png" alt="Pokédex light mode" width="160"> | <img src="docs/screenshots/pokedex_dark.png" alt="Pokédex dark mode" width="160"> |
-| <img src="docs/screenshots/details_light.png" alt="Pokémon details light mode" width="160"> | <img src="docs/screenshots/details_dark.png" alt="Pokémon details dark mode" width="160"> |
-| <img src="docs/screenshots/collection_light.png" alt="Collection light mode" width="160"> | <img src="docs/screenshots/collection_dark.png" alt="Collection dark mode" width="160"> |
-| <img src="docs/screenshots/profile_light.png" alt="Profile light mode" width="160"> | <img src="docs/screenshots/profile_dark.png" alt="Profile dark mode" width="160"> |
-| <img src="docs/screenshots/settings_light.png" alt="Settings light mode" width="160"> | <img src="docs/screenshots/settings_dark.png" alt="Settings dark mode" width="160"> |
+| <img src="docs/screenshots/screenshot_pokedex_light_v2.png" alt="Pokédex light mode" width="160"> | <img src="docs/screenshots/screenshot_pokedex_dark_v2.png" alt="Pokédex dark mode" width="160"> |
+| <img src="docs/screenshots/screenshot_details_light_v2.png" alt="Pokémon details light mode" width="160"> | <img src="docs/screenshots/screenshot_details_dark_v2.png" alt="Pokémon details dark mode" width="160"> |
+| <img src="docs/screenshots/screenshot_collection_light_v2.png" alt="Collection light mode" width="160"> | <img src="docs/screenshots/screenshot_collection_dark_v2.png" alt="Collection dark mode" width="160"> |
+| <img src="docs/screenshots/screenshot_profile_light_v2.png" alt="Profile light mode" width="160"> | <img src="docs/screenshots/screenshot_profile_dark_v2.png" alt="Profile dark mode" width="160"> |
+| <img src="docs/screenshots/screenshot_settings_light_v2.png" alt="Settings light mode" width="160"> | <img src="docs/screenshots/screenshot_settings_dark_v2.png" alt="Settings dark mode" width="160"> |
 
 ## Setup
 
