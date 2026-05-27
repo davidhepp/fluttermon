@@ -91,7 +91,9 @@ class ProfileScreen extends StatelessWidget {
                 saveErrorMessage: teamProvider.saveErrorMessage,
                 collection: collectionProvider.pokemons,
                 isCollectionLoading: collectionProvider.isLoading,
+                collectionErrorMessage: collectionProvider.errorMessage,
                 onRetryTeam: teamProvider.fetchTeam,
+                onRetryCollection: collectionProvider.fetchCollection,
                 onSelectPokemon: teamProvider.setPokemonAtSlot,
                 onClearSlot: teamProvider.clearSlot,
               ),
@@ -112,7 +114,9 @@ class _TeamSlotGrid extends StatelessWidget {
     required this.saveErrorMessage,
     required this.collection,
     required this.isCollectionLoading,
+    required this.collectionErrorMessage,
     required this.onRetryTeam,
+    required this.onRetryCollection,
     required this.onSelectPokemon,
     required this.onClearSlot,
   });
@@ -124,7 +128,9 @@ class _TeamSlotGrid extends StatelessWidget {
   final String? saveErrorMessage;
   final List<Pokemon> collection;
   final bool isCollectionLoading;
+  final String? collectionErrorMessage;
   final VoidCallback onRetryTeam;
+  final VoidCallback onRetryCollection;
   final Future<void> Function(int slotIndex, Pokemon pokemon) onSelectPokemon;
   final Future<void> Function(int slotIndex) onClearSlot;
 
@@ -146,54 +152,67 @@ class _TeamSlotGrid extends StatelessWidget {
       );
     }
 
-    return GridView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: 6,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 12,
-        mainAxisSpacing: 12,
-        childAspectRatio: 1.5,
-      ),
-      itemBuilder: (context, index) {
-        final pokemon = team[index];
-
-        return InkWell(
-          borderRadius: BorderRadius.circular(8),
-          onTap: isSaving
-              ? null
-              : () {
-                  _showTeamPicker(context, index);
-                },
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              border: Border.all(color: colorScheme.outlineVariant),
-              borderRadius: BorderRadius.circular(8),
-              color: colorScheme.surfaceContainerHighest.withValues(
-                alpha: 0.35,
-              ),
-            ),
-            child: pokemon == null
-                ? Center(
-                    child: Icon(
-                      Icons.add,
-                      color: colorScheme.onSurfaceVariant.withValues(
-                        alpha: 0.5,
-                      ),
-                    ),
-                  )
-                : _TeamPokemonSlot(
-                    pokemon: pokemon,
-                    onClear: isSaving
-                        ? null
-                        : () {
-                            onClearSlot(index);
-                          },
-                  ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        GridView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: 6,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12,
+            childAspectRatio: 1.5,
           ),
-        );
-      },
+          itemBuilder: (context, index) {
+            final pokemon = team[index];
+
+            return InkWell(
+              borderRadius: BorderRadius.circular(8),
+              onTap: isSaving
+                  ? null
+                  : () {
+                      _showTeamPicker(context, index);
+                    },
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  border: Border.all(color: colorScheme.outlineVariant),
+                  borderRadius: BorderRadius.circular(8),
+                  color: colorScheme.surfaceContainerHighest.withValues(
+                    alpha: 0.35,
+                  ),
+                ),
+                child: pokemon == null
+                    ? Center(
+                        child: Icon(
+                          Icons.add,
+                          color: colorScheme.onSurfaceVariant.withValues(
+                            alpha: 0.5,
+                          ),
+                        ),
+                      )
+                    : _TeamPokemonSlot(
+                        pokemon: pokemon,
+                        onClear: isSaving
+                            ? null
+                            : () {
+                                onClearSlot(index);
+                              },
+                      ),
+              ),
+            );
+          },
+        ),
+        if (isSaving) ...[
+          const SizedBox(height: 12),
+          const LinearProgressIndicator(),
+        ],
+        if (saveErrorMessage != null) ...[
+          const SizedBox(height: 8),
+          Text(saveErrorMessage!, style: TextStyle(color: colorScheme.error)),
+        ],
+      ],
     );
   }
 
@@ -204,6 +223,22 @@ class _TeamSlotGrid extends StatelessWidget {
       builder: (context) {
         if (isCollectionLoading) {
           return const Center(child: CircularProgressIndicator());
+        }
+
+        if (collectionErrorMessage != null) {
+          return Padding(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(collectionErrorMessage!, textAlign: TextAlign.center),
+                TextButton(
+                  onPressed: onRetryCollection,
+                  child: const Text('Retry'),
+                ),
+              ],
+            ),
+          );
         }
 
         if (collection.isEmpty) {

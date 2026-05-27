@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../app_routes.dart';
 import '../models/pokemon.dart';
 import '../providers/collection_provider.dart';
+import '../providers/team_provider.dart';
 import '../widgets/app_bar.dart';
 
 class CollectionScreen extends StatelessWidget {
@@ -16,6 +17,7 @@ class CollectionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final collectionProvider = context.watch<CollectionProvider>();
+    final teamProvider = context.read<TeamProvider>();
 
     return Scaffold(
       body: CustomScrollView(
@@ -77,8 +79,9 @@ class CollectionScreen extends StatelessWidget {
 
                   return _CollectionPokemonTile(
                     pokemon: pokemon,
-                    onRemove: () {
-                      collectionProvider.removePokemon(pokemon);
+                    onRemove: () async {
+                      await collectionProvider.removePokemon(pokemon);
+                      await teamProvider.removePokemon(pokemon);
                     },
                     onTap: () {
                       _openPokemonDetail(context, pokemon);

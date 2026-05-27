@@ -5,6 +5,7 @@ import '../models/pokemon.dart';
 import '../models/pokemon_detail.dart';
 import '../providers/collection_provider.dart';
 import '../providers/pokemon_detail_provider.dart';
+import '../providers/team_provider.dart';
 
 class PokemonDetailScreen extends StatefulWidget {
   const PokemonDetailScreen({super.key});
@@ -47,6 +48,7 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
   Widget build(BuildContext context) {
     final provider = context.watch<PokemonDetailProvider>();
     final collectionProvider = context.watch<CollectionProvider>();
+    final teamProvider = context.read<TeamProvider>();
     final pokemon = _pokemon;
 
     return Scaffold(
@@ -55,6 +57,7 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
         pokemon: pokemon,
         provider: provider,
         collectionProvider: collectionProvider,
+        teamProvider: teamProvider,
         onRetry: pokemon == null
             ? null
             : () {
@@ -70,12 +73,14 @@ class _PokemonDetailBody extends StatelessWidget {
     required this.pokemon,
     required this.provider,
     required this.collectionProvider,
+    required this.teamProvider,
     required this.onRetry,
   });
 
   final Pokemon? pokemon;
   final PokemonDetailProvider provider;
   final CollectionProvider collectionProvider;
+  final TeamProvider teamProvider;
   final VoidCallback? onRetry;
 
   @override
@@ -111,6 +116,7 @@ class _PokemonDetailBody extends StatelessWidget {
       pokemon: pokemon!,
       detail: detail,
       collectionProvider: collectionProvider,
+      teamProvider: teamProvider,
     );
   }
 }
@@ -120,11 +126,13 @@ class _PokemonDetailContent extends StatelessWidget {
     required this.pokemon,
     required this.detail,
     required this.collectionProvider,
+    required this.teamProvider,
   });
 
   final Pokemon pokemon;
   final PokemonDetail detail;
   final CollectionProvider collectionProvider;
+  final TeamProvider teamProvider;
 
   @override
   Widget build(BuildContext context) {
@@ -190,6 +198,7 @@ class _PokemonDetailContent extends StatelessWidget {
               : () {
                   if (isCollected) {
                     collectionProvider.removePokemon(pokemon);
+                    teamProvider.removePokemon(pokemon);
                   } else {
                     collectionProvider.addPokemon(pokemon);
                   }
