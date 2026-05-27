@@ -27,6 +27,10 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
     _pokemon = ModalRoute.of(context)?.settings.arguments as Pokemon?;
     final pokemon = _pokemon;
     if (pokemon != null) {
+      // Defer the provider update until this route has finished mounting.
+      // fetchPokemonDetail notifies listeners immediately for its loading state;
+      // doing that during provider/route construction can trip Flutter's
+      // "dirty element" assertion.
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (!mounted) {
           return;
