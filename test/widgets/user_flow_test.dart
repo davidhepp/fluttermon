@@ -74,7 +74,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.byTooltip('Profile'));
+    await tester.tap(find.text('Profile'));
     await tester.pumpAndSettle();
     await tester.tap(find.byTooltip('Settings'));
     await tester.pumpAndSettle();
@@ -88,7 +88,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Misty'), findsOneWidget);
 
-    await tester.pageBack();
+    await tester.tap(find.text('Pokédex'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Bulbasaur'));
     await tester.pumpAndSettle();
@@ -104,7 +104,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byIcon(Icons.check_circle), findsOneWidget);
 
-    await tester.tap(find.byTooltip('Profile'));
+    await tester.tap(find.text('Profile'));
     await tester.pumpAndSettle();
     expect(find.text('Team'), findsOneWidget);
 

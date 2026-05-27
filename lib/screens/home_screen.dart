@@ -2,43 +2,46 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/navigation_provider.dart';
-import '../widgets/page_indicator.dart';
 import 'collection_screen.dart';
 import 'pokemon_list_screen.dart';
+import 'profile_screen.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  final PageController _pageController = PageController();
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     final currentPage = context.watch<NavigationProvider>().currentPage;
 
     return Scaffold(
-      body: Stack(
-        children: [
-          PageView(
-            controller: _pageController,
-            onPageChanged: context.read<NavigationProvider>().setCurrentPage,
-            children: const [PokemonListScreen(), CollectionScreen()],
+      body: IndexedStack(
+        index: currentPage,
+        children: const [
+          CollectionScreen(),
+          PokemonListScreen(),
+          ProfileScreen(),
+        ],
+      ),
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: currentPage,
+        onDestinationSelected: context
+            .read<NavigationProvider>()
+            .setCurrentPage,
+        destinations: const [
+          NavigationDestination(
+            icon: Icon(Icons.collections_bookmark_outlined),
+            selectedIcon: Icon(Icons.collections_bookmark),
+            label: 'Collection',
           ),
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 16 + MediaQuery.paddingOf(context).bottom,
-            child: PageIndicator(currentPage: currentPage, pageCount: 2),
+          NavigationDestination(
+            icon: Icon(Icons.catching_pokemon_outlined),
+            selectedIcon: Icon(Icons.catching_pokemon),
+            label: 'Pokédex',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.person_outline),
+            selectedIcon: Icon(Icons.person),
+            label: 'Profile',
           ),
         ],
       ),

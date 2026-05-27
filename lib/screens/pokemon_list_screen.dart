@@ -88,7 +88,6 @@ class _PokemonListScreenState extends State<PokemonListScreen> {
             const CustomSliverAppBar(
               title: 'Pokédex',
               imagePath: 'assets/images/appbar/appbar2.png',
-              showProfileButton: true,
             ),
             PokemonSearchBar(
               controller: _searchController,
