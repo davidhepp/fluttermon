@@ -8,6 +8,7 @@ import 'providers/pokemon_detail_provider.dart';
 import 'providers/pokemon_provider.dart';
 import 'providers/profile_provider.dart';
 import 'providers/settings_provider.dart';
+import 'providers/team_provider.dart';
 import 'screens/collection_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/pokemon_detail_screen.dart';
@@ -17,6 +18,7 @@ import 'services/collection_service.dart';
 import 'services/pokemon_service.dart';
 import 'services/profile_service.dart';
 import 'services/settings_service.dart';
+import 'services/team_service.dart';
 import 'theme/app_theme.dart';
 
 void main() {
@@ -36,6 +38,9 @@ class MainApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) =>
               CollectionProvider(CollectionService())..fetchCollection(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => TeamProvider(TeamService())..fetchTeam(),
         ),
         ChangeNotifierProvider(create: (_) => NavigationProvider()),
         ChangeNotifierProvider(
