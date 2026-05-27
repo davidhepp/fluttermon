@@ -113,18 +113,10 @@ class _AppBarCircleButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: AppColors.headerButtonBackground,
-        shape: BoxShape.circle,
-        border: Border.all(color: AppColors.white, width: 1.5),
-      ),
-      child: IconButton(
-        icon: Icon(icon),
-        color: AppColors.white,
-        tooltip: tooltip,
-        onPressed: onPressed,
-      ),
+    return IconButton(
+      icon: Icon(icon, color: AppColors.white),
+      tooltip: tooltip,
+      onPressed: onPressed,
     );
   }
 }
