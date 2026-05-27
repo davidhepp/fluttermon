@@ -1,88 +1,125 @@
-# fluttermon
+# Fluttermon
 
-No description yet
+Fluttermon is a small mobile Pokédex app built with Flutter. The app lets users browse Pokémon, search through the Pokédex, open a detail page, save Pokémon to a personal collection, and build a six-slot team from collected Pokémon.
 
-## Structure
+The project uses the Pokémon domain because it gives a clear mobile app use case: list browsing, detail pages, image loading, local persistence, searching, and user-managed state.
 
-The folder structure of the app is as follows:
+## Features
+
+- Pokédex with scrollable Pokémon cards.
+- Local Pokémon index loaded from `assets/data/pokemon_db.json`.
+- Search with validation outside the widget layer.
+- Pokémon detail page using the PokeAPI for live detail data.
+- Collection page for saved Pokémon.
+- Profile page with a six-slot team built from collected Pokémon.
+- Settings page with light/dark/system theme switching.
+- Trainer name stored locally with SharedPreferences.
+- Loading, error, and empty states for asynchronous operations.
+
+## Screenshots
+
+### Pokédex
+
+![Pokédex screen](docs/screenshots/pokedex.png)
+
+### Collection
+
+![Collection screen](docs/screenshots/collection.png)
+
+### Profile
+
+![Profile screen](docs/screenshots/profile.png)
+
+### Settings
+
+![Settings screen](docs/screenshots/settings.png)
+
+## Setup
+
+This project expects a recent Flutter SDK with Dart 3.11 support. The project was developed with the SDK constraint in `pubspec.yaml`:
+
+```yaml
+environment:
+  sdk: ^3.11.5
+```
+
+Check your local Flutter installation:
+
+```sh
+flutter --version
+flutter doctor
+```
+
+Install dependencies:
+
+```sh
+flutter pub get
+```
+
+Run the app on an emulator or connected device:
+
+```sh
+flutter run
+```
+
+Run tests:
+
+```sh
+flutter test
+```
+
+Run static analysis:
+
+```sh
+flutter analyze
+```
+
+## Main Packages
+
+- `provider`: State management for the Pokédex, collection, team, profile, settings, and navigation state.
+- `http`: Fetching Pokémon detail data from the PokeAPI.
+- `shared_preferences`: Local persistence for settings, trainer profile, collection, and team.
+- `flutter_launcher_icons`: Generates launcher icons from the configured app icon.
+- `flutter_test`: Unit and widget testing.
+- `flutter_lints`: Static analysis rules for cleaner Dart and Flutter code.
+
+## Data Sources
+
+The app uses a mix of local and remote data:
+
+- `assets/data/pokemon_db.json`: Local Pokémon index generated from the PokeAPI list endpoint. This keeps search fast and avoids loading the full list from the network every time.
+- PokeAPI detail endpoints: Used when opening a Pokémon detail page for types, stats, artwork, and Pokédex description.
+- `assets/images/types/`: Local type badge sprites downloaded from PokeAPI sprite resources.
+
+## Architecture
+
+The project follows a layered structure:
 
 ```text
 lib/
-  main.dart
-  models/
-  services/
-  providers/
-  screens/
-  widgets/
+  models/      Data classes and JSON parsing
+  services/    API calls, asset loading, and SharedPreferences access
+  providers/   ChangeNotifier state and app logic
+  screens/     Full app screens
+  widgets/     Reusable UI components
+  validators/  Input validation functions outside widgets
 ```
 
-## What References What
+This keeps API/storage code out of widgets and keeps UI screens focused on rendering state.
 
-`main.dart`
+## Testing
 
-- Imports `PokemonProvider`, `PokemonService`, and `PokemonListScreen`.
-- Creates the `ChangeNotifierProvider`.
-- Builds the `MaterialApp`.
-- Starts the app on `PokemonListScreen`.
+The `test/` folder contains:
 
-`models/pokemon.dart`
+- Model tests for JSON parsing and serialization.
+- Validator tests for search and trainer name input.
+- Service tests for SharedPreferences persistence.
+- Provider tests for state changes.
+- A widget test for the settings screen.
+- A comprehensive widget flow test in `test/widgets/user_flow_test.dart` that changes the trainer name, adds a Pokémon to the collection from the detail page, and adds that Pokémon to the profile team.
 
-- Defines the `Pokemon` model.
-- Converts one Pokemon JSON object into a Dart object with `Pokemon.fromJson`.
-- Does not depend on other app files.
+All tests should pass with:
 
-`services/pokemon_service.dart`
-
-- Imports `http` for the API request.
-- Imports `Pokemon` from `models/pokemon.dart`.
-- Fetches data from `https://pokeapi.co/api/v2/pokemon?limit=10000`.
-- Parses JSON and returns `List<Pokemon>`.
-- Throws `PokemonServiceException` when the API response is not successful.
-
-`providers/pokemon_provider.dart`
-
-- Imports `Pokemon` from `models/pokemon.dart`.
-- Imports `PokemonService` from `services/pokemon_service.dart`.
-- Owns the app state for the Pokemon list:
-- `pokemons`
-- `isLoading`
-- `errorMessage`
-- Calls `PokemonService.fetchPokemons()`.
-- Notifies the UI when loading, success, or error state changes.
-
-`screens/pokemon_list_screen.dart`
-
-- Imports `PokemonProvider`.
-- Imports `PokemonList`.
-- Reads state with `context.watch<PokemonProvider>()`.
-- Shows:
-- A loading spinner while data is loading.
-- An error message and retry button if loading fails.
-- An empty message if no Pokemon are returned.
-- The `PokemonList` widget when Pokemon are available.
-
-`widgets/pokemon_list.dart`
-
-- Imports the `Pokemon` model.
-- Receives `List<Pokemon>` from the screen.
-- Builds the basic list UI.
-
-## Data Flow
-
-1. `main.dart` creates `PokemonProvider` and gives it a `PokemonService`.
-2. `PokemonProvider.fetchPokemons()` runs when the provider is created.
-3. `PokemonProvider` asks `PokemonService` to fetch Pokemon from the API.
-4. `PokemonService` makes the HTTP request and converts JSON into `Pokemon` models.
-5. `PokemonProvider` stores the result in `pokemons` and notifies listeners.
-6. `PokemonListScreen` rebuilds because it watches `PokemonProvider`.
-7. `PokemonListScreen` passes the Pokemon list to `PokemonList`.
-8. `PokemonList` renders the names.
-
-## State Handling
-
-All asynchronous API loading is handled by `PokemonProvider`.
-
-- Loading state: `isLoading == true`, shown as `CircularProgressIndicator`.
-- Error state: `errorMessage != null`, shown with a retry button.
-- Empty state: `pokemons.isEmpty`, shown as `No pokemons found`.
-- Success state: `pokemons` contains data, shown in the list.
+```sh
+flutter test
+```
