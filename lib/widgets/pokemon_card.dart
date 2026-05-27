@@ -3,9 +3,15 @@ import 'package:flutter/material.dart';
 import '../models/pokemon.dart';
 
 class PokemonCard extends StatelessWidget {
-  const PokemonCard({required this.pokemon, this.onTap, super.key});
+  const PokemonCard({
+    required this.pokemon,
+    this.isCollected = false,
+    this.onTap,
+    super.key,
+  });
 
   final Pokemon pokemon;
+  final bool isCollected;
   final VoidCallback? onTap;
 
   @override
@@ -49,6 +55,14 @@ class PokemonCard extends StatelessWidget {
                   ],
                 ),
               ),
+              if (isCollected) ...[
+                const SizedBox(width: 8),
+                Icon(
+                  Icons.check_circle,
+                  color: theme.colorScheme.primary,
+                  semanticLabel: 'Collected',
+                ),
+              ],
             ],
           ),
         ),

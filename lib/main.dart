@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'app_routes.dart';
+import 'providers/collection_provider.dart';
 import 'providers/navigation_provider.dart';
 import 'providers/pokemon_detail_provider.dart';
 import 'providers/pokemon_provider.dart';
@@ -12,6 +13,7 @@ import 'screens/home_screen.dart';
 import 'screens/pokemon_detail_screen.dart';
 import 'screens/profile_screen.dart';
 import 'screens/settings_screen.dart';
+import 'services/collection_service.dart';
 import 'services/pokemon_service.dart';
 import 'services/profile_service.dart';
 import 'services/settings_service.dart';
@@ -30,6 +32,10 @@ class MainApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (_) => PokemonProvider(PokemonService())..fetchPokemons(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) =>
+              CollectionProvider(CollectionService())..fetchCollection(),
         ),
         ChangeNotifierProvider(create: (_) => NavigationProvider()),
         ChangeNotifierProvider(

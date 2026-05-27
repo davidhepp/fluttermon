@@ -29,6 +29,10 @@ class Pokemon {
     return Pokemon(name: json['name'].toString(), url: json['url'].toString());
   }
 
+  Map<String, dynamic> toJson() {
+    return {'name': name, 'url': url};
+  }
+
   factory Pokemon.fromDetailJson(Map<String, dynamic> json) {
     final id = json['id'].toString();
 

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../app_routes.dart';
 import '../models/pokemon.dart';
+import '../providers/collection_provider.dart';
 import '../providers/pokemon_provider.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/pokemon_list.dart';
@@ -74,6 +75,7 @@ class _PokemonListScreenState extends State<PokemonListScreen> {
   @override
   Widget build(BuildContext context) {
     final pokemonProvider = context.watch<PokemonProvider>();
+    final collectionProvider = context.watch<CollectionProvider>();
     final visiblePokemons = pokemonProvider.visiblePokemons;
 
     return Scaffold(
@@ -142,6 +144,7 @@ class _PokemonListScreenState extends State<PokemonListScreen> {
                 showEndMessage: !pokemonProvider.hasActiveSearch,
                 onRetryLoadMore: pokemonProvider.loadNextPage,
                 onPokemonTap: _openPokemonDetail,
+                isPokemonCollected: collectionProvider.isCollected,
               ),
           ],
         ),

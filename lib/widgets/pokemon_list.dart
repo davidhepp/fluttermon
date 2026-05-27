@@ -12,6 +12,7 @@ class PokemonList extends StatelessWidget {
     required this.showEndMessage,
     required this.onRetryLoadMore,
     required this.onPokemonTap,
+    required this.isPokemonCollected,
     super.key,
   });
 
@@ -22,6 +23,7 @@ class PokemonList extends StatelessWidget {
   final bool showEndMessage;
   final VoidCallback onRetryLoadMore;
   final ValueChanged<Pokemon> onPokemonTap;
+  final bool Function(Pokemon pokemon) isPokemonCollected;
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +44,7 @@ class PokemonList extends StatelessWidget {
 
         return PokemonCard(
           pokemon: pokemon,
+          isCollected: isPokemonCollected(pokemon),
           onTap: () {
             onPokemonTap(pokemon);
           },

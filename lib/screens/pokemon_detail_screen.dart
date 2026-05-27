@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../models/pokemon.dart';
 import '../models/pokemon_detail.dart';
+import '../providers/collection_provider.dart';
 import '../providers/pokemon_detail_provider.dart';
 
 class PokemonDetailScreen extends StatefulWidget {
@@ -45,6 +46,7 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<PokemonDetailProvider>();
+    final collectionProvider = context.watch<CollectionProvider>();
     final pokemon = _pokemon;
 
     return Scaffold(
@@ -52,6 +54,7 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
       body: _PokemonDetailBody(
         pokemon: pokemon,
         provider: provider,
+        collectionProvider: collectionProvider,
         onRetry: pokemon == null
             ? null
             : () {
@@ -66,11 +69,13 @@ class _PokemonDetailBody extends StatelessWidget {
   const _PokemonDetailBody({
     required this.pokemon,
     required this.provider,
+    required this.collectionProvider,
     required this.onRetry,
   });
 
   final Pokemon? pokemon;
   final PokemonDetailProvider provider;
+  final CollectionProvider collectionProvider;
   final VoidCallback? onRetry;
 
   @override
@@ -102,18 +107,29 @@ class _PokemonDetailBody extends StatelessWidget {
       return const Center(child: Text('No Pokemon details found'));
     }
 
-    return _PokemonDetailContent(detail: detail);
+    return _PokemonDetailContent(
+      pokemon: pokemon!,
+      detail: detail,
+      collectionProvider: collectionProvider,
+    );
   }
 }
 
 class _PokemonDetailContent extends StatelessWidget {
-  const _PokemonDetailContent({required this.detail});
+  const _PokemonDetailContent({
+    required this.pokemon,
+    required this.detail,
+    required this.collectionProvider,
+  });
 
+  final Pokemon pokemon;
   final PokemonDetail detail;
+  final CollectionProvider collectionProvider;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final isCollected = collectionProvider.isCollected(pokemon);
 
     return ListView(
       padding: const EdgeInsets.all(20),
@@ -167,6 +183,36 @@ class _PokemonDetailContent extends StatelessWidget {
         Text('Stats', style: theme.textTheme.titleLarge),
         const SizedBox(height: 12),
         ...detail.stats.map((stat) => _StatRow(stat: stat)),
+        const SizedBox(height: 24),
+        FilledButton.icon(
+          onPressed: collectionProvider.isSaving
+              ? null
+              : () {
+                  if (isCollected) {
+                    collectionProvider.removePokemon(pokemon);
+                  } else {
+                    collectionProvider.addPokemon(pokemon);
+                  }
+                },
+          icon: collectionProvider.isSaving
+              ? const SizedBox(
+                  width: 18,
+                  height: 18,
+                  child: CircularProgressIndicator(strokeWidth: 2),
+                )
+              : Icon(isCollected ? Icons.remove_circle_outline : Icons.add),
+          label: Text(
+            isCollected ? 'Remove from collection' : 'Add to collection',
+          ),
+        ),
+        if (collectionProvider.saveErrorMessage != null) ...[
+          const SizedBox(height: 8),
+          Text(
+            collectionProvider.saveErrorMessage!,
+            textAlign: TextAlign.center,
+            style: TextStyle(color: theme.colorScheme.error),
+          ),
+        ],
       ],
     );
   }
