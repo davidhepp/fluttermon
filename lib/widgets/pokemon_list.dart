@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/pokemon.dart';
+import 'pokemon_card.dart';
 
 class PokemonList extends StatelessWidget {
   const PokemonList({required this.pokemons, super.key});
@@ -12,14 +13,7 @@ class PokemonList extends StatelessWidget {
     return SliverList.builder(
       itemCount: pokemons.length,
       itemBuilder: (context, index) {
-        final String name = pokemons[index].name;
-
-        return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: Center(
-            child: Text(name, style: const TextStyle(fontSize: 18)),
-          ),
-        );
+        return PokemonCard(pokemon: pokemons[index]);
       },
     );
   }
