@@ -114,7 +114,9 @@ class _AppBarCircleButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      icon: Icon(icon, color: AppColors.white),
+      icon: Icon(icon),
+      color: AppColors.white,
+      iconSize: 32,
       tooltip: tooltip,
       onPressed: onPressed,
     );

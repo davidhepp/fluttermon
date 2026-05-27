@@ -9,7 +9,9 @@ class PokemonList extends StatelessWidget {
     required this.isLoadingMore,
     required this.loadMoreErrorMessage,
     required this.hasMorePokemons,
+    required this.showEndMessage,
     required this.onRetryLoadMore,
+    required this.onPokemonTap,
     super.key,
   });
 
@@ -17,7 +19,9 @@ class PokemonList extends StatelessWidget {
   final bool isLoadingMore;
   final String? loadMoreErrorMessage;
   final bool hasMorePokemons;
+  final bool showEndMessage;
   final VoidCallback onRetryLoadMore;
+  final ValueChanged<Pokemon> onPokemonTap;
 
   @override
   Widget build(BuildContext context) {
@@ -29,11 +33,19 @@ class PokemonList extends StatelessWidget {
             isLoadingMore: isLoadingMore,
             errorMessage: loadMoreErrorMessage,
             hasMorePokemons: hasMorePokemons,
+            showEndMessage: showEndMessage,
             onRetry: onRetryLoadMore,
           );
         }
 
-        return PokemonCard(pokemon: pokemons[index]);
+        final pokemon = pokemons[index];
+
+        return PokemonCard(
+          pokemon: pokemon,
+          onTap: () {
+            onPokemonTap(pokemon);
+          },
+        );
       },
     );
   }
@@ -44,12 +56,14 @@ class _PokemonListFooter extends StatelessWidget {
     required this.isLoadingMore,
     required this.errorMessage,
     required this.hasMorePokemons,
+    required this.showEndMessage,
     required this.onRetry,
   });
 
   final bool isLoadingMore;
   final String? errorMessage;
   final bool hasMorePokemons;
+  final bool showEndMessage;
   final VoidCallback onRetry;
 
   @override
@@ -74,7 +88,7 @@ class _PokemonListFooter extends StatelessWidget {
       );
     }
 
-    if (!hasMorePokemons) {
+    if (!hasMorePokemons && showEndMessage) {
       return const Padding(
         padding: EdgeInsets.symmetric(vertical: 24),
         child: Center(child: Text('All pokemons loaded')),

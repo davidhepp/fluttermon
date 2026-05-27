@@ -8,6 +8,7 @@ import 'providers/profile_provider.dart';
 import 'providers/settings_provider.dart';
 import 'screens/collection_screen.dart';
 import 'screens/home_screen.dart';
+import 'screens/pokemon_detail_screen.dart';
 import 'screens/profile_screen.dart';
 import 'screens/settings_screen.dart';
 import 'services/pokemon_service.dart';
@@ -48,6 +49,7 @@ class MainApp extends StatelessWidget {
             routes: {
               AppRoutes.home: (_) => const HomeScreen(),
               AppRoutes.collection: (_) => const CollectionScreen(),
+              AppRoutes.pokemonDetail: (_) => const PokemonDetailScreen(),
               AppRoutes.profile: (_) => const ProfileScreen(),
               AppRoutes.settings: (_) => const SettingsScreen(),
             },

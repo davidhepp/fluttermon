@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../app_routes.dart';
+import '../models/pokemon.dart';
 import '../providers/pokemon_provider.dart';
-import '../widgets/pokemon_list.dart';
 import '../widgets/app_bar.dart';
+import '../widgets/pokemon_list.dart';
+import '../widgets/pokemon_search_bar.dart';
 
 class PokemonListScreen extends StatefulWidget {
   const PokemonListScreen({super.key});
@@ -14,6 +17,7 @@ class PokemonListScreen extends StatefulWidget {
 
 class _PokemonListScreenState extends State<PokemonListScreen> {
   final ScrollController _scrollController = ScrollController();
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
@@ -26,6 +30,7 @@ class _PokemonListScreenState extends State<PokemonListScreen> {
     _scrollController
       ..removeListener(_handleScroll)
       ..dispose();
+    _searchController.dispose();
     super.dispose();
   }
 
@@ -62,9 +67,14 @@ class _PokemonListScreenState extends State<PokemonListScreen> {
     return (maxHeight - scrollOffset).clamp(minHeight, maxHeight);
   }
 
+  void _openPokemonDetail(Pokemon pokemon) {
+    Navigator.pushNamed(context, AppRoutes.pokemonDetail, arguments: pokemon);
+  }
+
   @override
   Widget build(BuildContext context) {
     final pokemonProvider = context.watch<PokemonProvider>();
+    final visiblePokemons = pokemonProvider.visiblePokemons;
 
     return Scaffold(
       body: RawScrollbar(
@@ -77,6 +87,15 @@ class _PokemonListScreenState extends State<PokemonListScreen> {
               title: 'Pokémon',
               imagePath: 'assets/images/appbar/appbar2.png',
               showProfileButton: true,
+            ),
+            PokemonSearchBar(
+              controller: _searchController,
+              errorText: pokemonProvider.searchErrorMessage,
+              onChanged: pokemonProvider.updateSearchQuery,
+              onClear: () {
+                _searchController.clear();
+                pokemonProvider.clearSearchQuery();
+              },
             ),
             if (pokemonProvider.isLoading)
               const SliverFillRemaining(
@@ -103,14 +122,65 @@ class _PokemonListScreenState extends State<PokemonListScreen> {
               const SliverFillRemaining(
                 child: Center(child: Text('No pokemons found')),
               )
+            else if (visiblePokemons.isEmpty)
+              SliverFillRemaining(
+                hasScrollBody: false,
+                child: _EmptySearchState(
+                  hasMorePokemons: pokemonProvider.hasMorePokemons,
+                  isLoadingMore: pokemonProvider.isLoadingMore,
+                  onLoadMore: pokemonProvider.loadNextPage,
+                ),
+              )
             else
               PokemonList(
-                pokemons: pokemonProvider.pokemons,
+                pokemons: visiblePokemons,
                 isLoadingMore: pokemonProvider.isLoadingMore,
                 loadMoreErrorMessage: pokemonProvider.loadMoreErrorMessage,
-                hasMorePokemons: pokemonProvider.hasMorePokemons,
+                hasMorePokemons:
+                    !pokemonProvider.hasActiveSearch &&
+                    pokemonProvider.hasMorePokemons,
+                showEndMessage: !pokemonProvider.hasActiveSearch,
                 onRetryLoadMore: pokemonProvider.loadNextPage,
+                onPokemonTap: _openPokemonDetail,
               ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _EmptySearchState extends StatelessWidget {
+  const _EmptySearchState({
+    required this.hasMorePokemons,
+    required this.isLoadingMore,
+    required this.onLoadMore,
+  });
+
+  final bool hasMorePokemons;
+  final bool isLoadingMore;
+  final VoidCallback onLoadMore;
+
+  @override
+  Widget build(BuildContext context) {
+    if (isLoadingMore) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text('No Pokemon match your search'),
+            if (hasMorePokemons) ...[
+              const SizedBox(height: 8),
+              TextButton(
+                onPressed: onLoadMore,
+                child: const Text('Load more Pokemon'),
+              ),
+            ],
           ],
         ),
       ),

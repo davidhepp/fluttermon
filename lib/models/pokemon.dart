@@ -28,4 +28,13 @@ class Pokemon {
   factory Pokemon.fromJson(Map<String, dynamic> json) {
     return Pokemon(name: json['name'].toString(), url: json['url'].toString());
   }
+
+  factory Pokemon.fromDetailJson(Map<String, dynamic> json) {
+    final id = json['id'].toString();
+
+    return Pokemon(
+      name: json['name'].toString(),
+      url: 'https://pokeapi.co/api/v2/pokemon/$id/',
+    );
+  }
 }

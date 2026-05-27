@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import '../models/pokemon.dart';
 
 class PokemonCard extends StatelessWidget {
-  const PokemonCard({required this.pokemon, super.key});
+  const PokemonCard({required this.pokemon, this.onTap, super.key});
 
   final Pokemon pokemon;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -15,38 +16,41 @@ class PokemonCard extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       clipBehavior: Clip.antiAlias,
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Row(
-          children: [
-            _PokemonImage(imageUrl: imageUrl),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    _formatName(pokemon.name),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  if (pokemon.id != null) ...[
-                    const SizedBox(height: 4),
+      child: InkWell(
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Row(
+            children: [
+              _PokemonImage(imageUrl: imageUrl),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
                     Text(
-                      '#${pokemon.id.toString().padLeft(3, '0')}',
-                      style: theme.textTheme.bodyMedium?.copyWith(
-                        color: theme.colorScheme.onSurfaceVariant,
+                      _formatName(pokemon.name),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
+                    if (pokemon.id != null) ...[
+                      const SizedBox(height: 4),
+                      Text(
+                        '#${pokemon.id.toString().padLeft(3, '0')}',
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: theme.colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                    ],
                   ],
-                ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
