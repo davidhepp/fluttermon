@@ -84,7 +84,7 @@ class _PokemonListScreenState extends State<PokemonListScreen> {
           controller: _scrollController,
           slivers: [
             const CustomSliverAppBar(
-              title: 'Pokémon',
+              title: 'Pokédex',
               imagePath: 'assets/images/appbar/appbar2.png',
               showProfileButton: true,
             ),
