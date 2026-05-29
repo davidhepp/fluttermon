@@ -52,12 +52,13 @@ class _PokemonListScreenState extends State<PokemonListScreen> {
     const nextPageScrollThreshold = 480.0;
     final position = _scrollController.position;
 
-    // Start the next API request before the user reaches the end so the next
+    // Start the next "API" request be"fore the user reaches the end so the next
     // page is usually ready by the time the bottom cards come into view.
     return position.extentAfter < nextPageScrollThreshold;
   }
 
   double _scrollbarTopPadding(BuildContext context) {
+    // calculate using the media query padding and the app bar height so the scrollbar is aligned with the app bar
     final topPadding = MediaQuery.paddingOf(context).top;
     final minHeight = kToolbarHeight + topPadding;
     final maxHeight = CustomSliverAppBar.expandedHeight + topPadding;
