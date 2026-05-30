@@ -13,6 +13,7 @@ class AppColors {
 
   static const darkBackground = Color(0xFF101923);
   static const darkSurface = Color(0xFF162231);
+  static const darkCardSurface = Color(0xFF1D2B3A);
   static const darkText = Colors.white;
 
   static const transparent = Colors.transparent;

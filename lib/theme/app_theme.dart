@@ -102,6 +102,7 @@ class AppTheme {
       foregroundColor: AppColors.darkText,
       centerTitle: true,
     ),
+    cardTheme: const CardThemeData(color: AppColors.darkCardSurface),
     navigationBarTheme: NavigationBarThemeData(
       backgroundColor: AppColors.darkBackground,
       indicatorColor: AppColors.darkBlue,
