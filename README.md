@@ -115,3 +115,7 @@ All tests should pass with:
 ```sh
 flutter test
 ```
+
+## Presentation
+
+- [Fluttermon presentation](docs/presentation/fluttermon-presentation.pptx)
