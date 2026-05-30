@@ -80,8 +80,9 @@ flutter analyze
 The app uses a mix of local and remote data:
 
 - `assets/data/pokemon_db.json`: Local Pokémon index generated from the PokeAPI list endpoint. This keeps search fast and avoids loading the full list from the network every time.
-- [PokeAPI Pokémon endpoint](https://pokeapi.co/docs/v2#pokemon): Used when opening a Pokémon detail page for types, stats, artwork, and species URL.
+- [PokeAPI Pokémon endpoint](https://pokeapi.co/docs/v2#pokemon): Used when opening a Pokémon detail page for types, stats, official artwork, and species URL.
 - [PokeAPI Pokémon Species endpoint](https://pokeapi.co/docs/v2#pokemon-species): Used for the Pokédex description and genus text.
+- [PokeAPI sprites repository](https://github.com/PokeAPI/sprites): Used for Pokémon official artwork image URLs in list, collection, team, and profile views.
 - `assets/images/types/`: Local type badge sprites downloaded from PokeAPI sprite resources.
 
 ## Architecture
