@@ -49,10 +49,10 @@ class _PokemonListScreenState extends State<PokemonListScreen> {
       return false;
     }
 
-    const nextPageScrollThreshold = 480.0;
+    const nextPageScrollThreshold = 320.0;
     final position = _scrollController.position;
 
-    // Start the next "API" request be"fore the user reaches the end so the next
+    // Start the next "API" request before the user reaches the end so the next
     // page is usually ready by the time the bottom cards come into view.
     return position.extentAfter < nextPageScrollThreshold;
   }
